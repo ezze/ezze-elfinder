@@ -31,8 +31,8 @@ class ElFinderConnectorAction extends CAction
             'roots' => array(
                 array(
                     'driver'  => "LocalFileSystem",
-                    'path' => "../files",
-                    'URL' => dirname($_SERVER['PHP_SELF']) . "/../files",
+                    'path' => realpath(Yii::app()->basePath . "/../files"),
+                    'URL' => "/files",
                     'accessControl' => "access"
                 )
             )
