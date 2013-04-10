@@ -11,7 +11,7 @@ include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARAT
  * Implements ElFinder connector's construction.
  *
  * @author Dmitriy Pushkov <ezze@ezze.org>
- * @version 0.0.2
+ * @version 0.0.3
  */
 class ElFinderConnectorAction extends CAction
 {

@@ -1,6 +1,6 @@
 EZZE-ELFINDER
 
-  Version: 0.0.2
+  Version: 0.0.3
   Author: Dmitriy Pushkov (ezze@ezze.org)
   Web-site: http://www.ezze.org
  
@@ -21,6 +21,9 @@ CHANGELOG
   Since version 0.0.2:
   - it's possible to specify such client options as functions using `js:` prefix
   in PHP code. Please refer to `clientOptions` parameter's description for details.
+
+  Since version 0.0.3:
+  - multiple ElFinder instances' initialization bug has been fixed.
 
 
 REQUIREMENTS
