@@ -1,6 +1,6 @@
 EZZE-ELFINDER
 
-  Version: 0.0.1
+  Version: 0.0.2
   Author: Dmitriy Pushkov (ezze@ezze.org)
   Web-site: http://www.ezze.org
  
@@ -14,6 +14,13 @@ DESCRIPTION
   ElFinder's client and connector and to link the manager with WYSIWYG editor
   (only CKEditor is supported at the moment). The extension also relies on the
   latest release of ElFinder 2.0-rc1 (10th of April, 2012).
+
+
+CHANGELOG
+
+  Since version 0.0.2:
+  - it's possible to specify such client options as functions using `js:` prefix
+  in PHP code. Please refer to `clientOptions` parameter's description for details.
 
 
 REQUIREMENTS
@@ -92,28 +99,42 @@ USAGE
 
   There are four possible parameters that can be passed to the widget:
 
-  `selector` - jQuery selector used to point to container element ElFinder
-  must be appended to. This parameter is optional and defaults to `#elfinder`;
+  1. `selector` - jQuery selector used to point to container element ElFinder
+  must be appended to. This parameter is optional and defaults to `#elfinder`.
 
-  `clientOptions` - an array of ElFinder's client configuration options
+  2. `clientOptions` - an array of ElFinder's client configuration options
   described here:
   https://github.com/Studio-42/elFinder/wiki/Client-configuration-options.
   Please note, there is also `wysiwyg` possible option that is not supported by
   ElFinder but is used to let the extension know if ElFinder is to be linked
   with some WYSIWYG editor by setting `getFileCallback`
   (https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#wiki-getFileCallback)
-  function. The reason to do it such way is that we cannot define a JavaScript
-  function in PHP, and therefore we analyze `wysiwyg` option in ElFinder's
-  initalization script `js/elFinderInit.js` of the extension and set the
-  callback function there. As mentioned above, only `ckeditor` value is
-  supported now but one can easily extend this script by adding callback
-  functions for other WYSIWYG editors.
+  function. Since version 0.0.2 of the extension it's also possible to specify
+  client's functions and handlers using `js:` prefix in the following manner:
 
-  `connectorRoute` - Yii route to ElFinder's connector action
+      'clientOptions' => array(
+          'getFileCallback' => "js: function(file) {
+                                    alert('Selected file is \"' + file + '\".')
+                                }",
+          'handlers' => array(
+              'init' => "js: function(event, elFinder) {
+                             alert('ElFinder has been initialized.')
+                         }",
+              'open' => "js: function(event, elFinder) {
+                             var path = event.data.options.path;
+                             alert('Directory \"' + path + '\" is open.')
+                         }"
+          )
+      )
+
+  Please note that if both `wysiwyg` and `getFileCallback` are specified
+  then a behavior of the former will be overriden by the latter.
+
+  3. `connectorRoute` - Yii route to ElFinder's connector action
   (`admin/fileUploaderConnector`).
 
-  `connectorOptions` - an array of ElFinder's connector configuration options
-  as described here:
+  4. `connectorOptions` - an array of ElFinder's connector configuration
+  options as described here:
   https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options.
   In the case of `LocalFileSystem` driver options `path` and `URL` of the
   `roots` are required to point to files' storage within file system and

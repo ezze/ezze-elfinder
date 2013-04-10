@@ -6,7 +6,7 @@ Yii::import("ext.ezzeelfinder.ElFinderConnectorAction");
  * A widget to integrate ElFinder uploader.
  *
  * @author Dmitriy Pushkov <ezze@ezze.org>
- * @version 0.0.1
+ * @version 0.0.2
  */
 class ElFinderWidget extends CWidget
 {

@@ -18,7 +18,7 @@ Yii::app()->clientScript->registerScriptFile($this->initJsUrl);
 
 // Registering a script to run initialization script when page's DOM will be built
 $initScript = "jQuery(document).ready(function() {
-    initElFinder(\"" . $this->selector . "\", " . $this->jsonClientOptions . ")
+    EzzeElFinder.init(\"" . $this->selector . "\", " . $this->jsonClientOptions . ")
 });";
 Yii::app()->clientScript->registerScript("elfinder-init", $initScript, CClientScript::POS_READY);
 
