@@ -6,7 +6,7 @@ Yii::import("ext.ezzeelfinder.ElFinderConnectorAction");
  * A widget to integrate ElFinder uploader.
  *
  * @author Dmitriy Pushkov <ezze@ezze.org>
- * @version 0.0.2
+ * @version 0.0.3
  */
 class ElFinderWidget extends CWidget
 {
@@ -160,6 +160,7 @@ class ElFinderWidget extends CWidget
      */
     public function init()
     {
+        parent::init();
         if ($this->connectorRoute !== null && is_string($this->connectorRoute)
                 && $this->connectorOptions !== null && is_array($this->connectorOptions))
         {
@@ -169,13 +170,32 @@ class ElFinderWidget extends CWidget
                 ElFinderConnectorAction::GET_PARAM_ELFINDER_CONNECTOR_OPTIONS => $connectorOptionsEncoded
             ));
         }
+        $this->registerScripts();
     }
 
-    /**
-     * Runs the widget rendering a template.
-     */
-    public function run()
+    protected function registerScripts()
     {
-        $this->render("elfinder");
+        // Registering required scripts and CSS files
+        Yii::app()->clientScript->registerCoreScript("jquery");
+        Yii::app()->clientScript->registerCoreScript("jquery.ui");
+        Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl()
+            . "/jui/css/base/jquery-ui.css");
+        Yii::app()->clientScript->registerCssFile($this->elFinderCssUrl . "/elfinder.min.css");
+        Yii::app()->clientScript->registerScriptFile($this->elFinderJsUrl . "/elfinder.min.js");
+        Yii::app()->clientScript->registerCssFile($this->elFinderCssUrl . "/theme.css");
+
+        // If client's language is set then also registering language script
+        if (isset($this->clientOptions['lang']) && $this->clientOptions['lang'])
+            Yii::app()->clientScript->registerScriptFile($this->elFinderJsUrl . "/i18n/elfinder." . $this->clientOptions['lang'] . ".js");
+
+        // Registering ElFinder's initialization script
+        Yii::app()->clientScript->registerScriptFile($this->initJsUrl);
+
+        // Registering a script to run initialization script when page's DOM will be built
+        $initScript = "jQuery(document).ready(function() {
+            EzzeElFinder.init(\"" . $this->selector . "\", " . $this->jsonClientOptions . ")
+        });";
+        $initScriptId = "elFinderInit" . preg_replace("/[^0-9]/", "", microtime(false)) . rand();
+        Yii::app()->clientScript->registerScript($initScriptId, $initScript, CClientScript::POS_READY);
     }
 }
