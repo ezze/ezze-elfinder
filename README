@@ -1,6 +1,6 @@
 EZZE-ELFINDER
 
-  Version: 0.0.3
+  Version: 0.0.4
   Author: Dmitriy Pushkov (ezze@ezze.org)
   Web-site: http://www.ezze.org
  
@@ -24,6 +24,10 @@ CHANGELOG
 
   Since version 0.0.3:
   - multiple ElFinder instances' initialization bug has been fixed.
+
+  Since version 0.0.4:
+  - file deletion and other actions' bug has been fixed according to
+  https://github.com/Studio-42/elFinder/issues/415
 
 
 REQUIREMENTS
