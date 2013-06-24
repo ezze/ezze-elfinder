@@ -9,7 +9,7 @@ EzzeElFinder.init = function(selector, options) {
     }
 
     // Checking whether WYSIWYG editor is specified
-    if (typeof(options['wysiwyg']) === "string") {
+    if (typeof(options['wysiwyg']) === "string" && !options['getFileCallback']) {
 
         // Setting callback function according to used WYSIWYG editor
         if (options['wysiwyg'] === "ckeditor") {
@@ -24,6 +24,11 @@ EzzeElFinder.init = function(selector, options) {
         // TODO: implement your WYSIWYG editor's callback function here
 
         delete options['wysiwyg'];
+    }
+
+    if(typeof(options['getFileCallback']) === "string") {
+        var callback = new Function("file", options['getFileCallback']);
+        options['getFileCallback'] = callback;
     }
 
     EzzeElFinder.evaluateOptions(options);
