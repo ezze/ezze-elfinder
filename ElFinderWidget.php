@@ -180,6 +180,10 @@ class ElFinderWidget extends CWidget
         Yii::app()->clientScript->registerCoreScript("jquery.ui");
         Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl()
             . "/jui/css/base/jquery-ui.css");
+
+        // fix Upload bug with Yiistrap/Yiistrap
+        Yii::app()->clientScript->registerScriptFile($this->elFinderJsUrl . "/jquery-migrate-1.2.1.js");
+
         Yii::app()->clientScript->registerCssFile($this->elFinderCssUrl . "/elfinder.min.css");
         Yii::app()->clientScript->registerScriptFile($this->elFinderJsUrl . "/elfinder.min.js");
         Yii::app()->clientScript->registerCssFile($this->elFinderCssUrl . "/theme.css");
